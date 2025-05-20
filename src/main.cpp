@@ -2,7 +2,7 @@
 #include "citclo/in_gateway.h"
 #include "citclo/message_bus.h"
 #include "citclo/signal_generator.h"
-#include "citclo/data_storage.h"
+#include "citclo/data_store.h"
 
 #include "memory"
 #include <iostream>
@@ -26,13 +26,13 @@ int main()
     DataSource dataSource{std::move(file), inGatewayCallback};
 
     SignalGenerator signalGenerator;
-    DataStorage dataStorage;
+    DataStore dataStore(10000);
 
-    auto signalGeneratorCallback =  [&signalGenerator](TickerData data) {signalGenerator.onNewData(data); }; 
-    auto dataStorageCallback =  [&dataStorage](TickerData data) {dataStorage.onNewData(data); };
+    auto signalGeneratorCallback =  [&signalGenerator](TickerData& data) {signalGenerator.onNewData(data); }; 
+    auto dataStoreCallback =  [&dataStore](TickerData& data) {dataStore.onNewData(data); };
 
     dataBus->subscribe(signalGeneratorCallback);
-    dataBus->subscribe(dataStorageCallback);
+    dataBus->subscribe(dataStoreCallback);
 
 
 

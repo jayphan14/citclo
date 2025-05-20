@@ -7,9 +7,9 @@ template <typename T>
 class MessageBus
 {
 private:
-    std::vector<std::function<void(T)>> subscribers{};
+    std::vector<std::function<void(T& )>> subscribers{};
 public:
-    void subscribe( std::function<void(T)> sub)
+    void subscribe( std::function<void(T& )> sub)
     {
         subscribers.push_back(sub);
     };
