@@ -43,12 +43,11 @@ TickerData InGateway::parseData(std::string& data)
 
     return ticker;
 };
+
 void InGateway::onNewData(std::string data)
 {
-    auto td = parseData(data);
-
-    std::cout << "Received and parse " << td << std::endl;
+    TickerData td = parseData(data);
+    dataBus->publish(td);
 };
-InGateway::InGateway()
-{
-}
+
+InGateway::InGateway(std::shared_ptr<MessageBus<TickerData>> bus): dataBus{bus} {}; 

@@ -4,12 +4,14 @@
 #include <memory>
 #include <string>
 #include "citclo/ticker_data.h"
+#include "citclo/message_bus.h"
 
 class InGateway
 {
 private:
     TickerData parseData(std::string& data);
+    std::shared_ptr<MessageBus<TickerData>> dataBus{};
 public:
-    InGateway();
+    InGateway(std::shared_ptr<MessageBus<TickerData>>);
     void onNewData(std::string data);
 };
