@@ -1,0 +1,28 @@
+# Build artifacts
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+/citclo
+/tests
+/*.o
+/*.obj
+/*.so
+/*.a
+/*.out
+/*.exe
+
+# Test output
+/tests/test_main
+
+# IDE & OS-specific
+.vscode/
+*.DS_Store
+
+# Generated logs or dumps
+*.log
+*.dSYM/
+
+# Data file is lowkey too big 
+/data/data/data.txt
