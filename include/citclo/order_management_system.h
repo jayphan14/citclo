@@ -10,10 +10,13 @@
 class OMS
 {
 private:
-    std::deque<OrderData> sent {};
-    std::deque<OrderData> filled {};
+    std::shared_ptr<MessageBus<OrderData>> orderBus;
+    std::deque<OrderData> sentOrders {};
+    std::deque<OrderData> filledOrders {};
+    std::vector<OrderData> currentPositions;
 public:
-    void onNewOrder(OrderData order);
-    
-    std::vector<OrderData> getOutstandingOrder();
+    OMS(std::shared_ptr<MessageBus<OrderData>> orderBus) : orderBus{orderBus} {};
+    void onNewSignal(OrderData order);
+    // void onNewAck(Ack ) 
+    std::vector<OrderData> getCurrentPositions();
 };
