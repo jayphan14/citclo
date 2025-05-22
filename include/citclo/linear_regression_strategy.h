@@ -8,6 +8,6 @@ class LinearRegressionStrategy: public SignalGenerator
 {
 private:
 public:
-    LinearRegressionStrategy(std::shared_ptr<MessageBus<OrderData>> orderBus, std::shared_ptr<DataStore> dataStore): SignalGenerator(orderBus, dataStore) {};
+    LinearRegressionStrategy(std::shared_ptr<MessageBus<OrderData>> signalBus, std::shared_ptr<DataStore> dataStore): SignalGenerator(signalBus, dataStore) {};
     virtual void onNewData(const TickerData& ticker) override;
 };

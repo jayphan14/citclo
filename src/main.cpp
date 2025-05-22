@@ -28,12 +28,12 @@ int main()
 
     DataSource dataSource{std::move(file), inGatewayCallback};
 
-    auto orderBus = std::make_shared<MessageBus<OrderData>>();
+    auto signalBus = std::make_shared<MessageBus<OrderData>>();
 
 
     auto dataStore = std::make_shared<DataStore>(10000);
 
-    LinearRegressionStrategy linRegStrat(orderBus, dataStore);
+    LinearRegressionStrategy linRegStrat(signalBus, dataStore);
 
     auto linRegStratCallback =  [&linRegStrat](TickerData& data) {linRegStrat.onNewData(data); }; 
     auto dataStoreCallback =  [&dataStore](TickerData& data) {dataStore->onNewData(data); };

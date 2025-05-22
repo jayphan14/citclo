@@ -26,6 +26,6 @@ void LinearRegressionStrategy::onNewData(const TickerData& ticker)
     if (ticker.price <= 0.98 * predictedPrice)
     {
         OrderData order {ticker.price, ticker.size};
-        orderBus->publish(order);
+        signalBus->publish(order);
     }
 }

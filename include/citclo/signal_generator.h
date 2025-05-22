@@ -11,10 +11,10 @@
 class SignalGenerator
 {
 protected:
-    std::shared_ptr<MessageBus<OrderData>> orderBus;
+    std::shared_ptr<MessageBus<OrderData>> signalBus;
     std::shared_ptr<DataStore> dataStore;
 public:
-    SignalGenerator(std::shared_ptr<MessageBus<OrderData>> orderBus, std::shared_ptr<DataStore> dataStore): orderBus {orderBus}, dataStore{dataStore} {}; 
+    SignalGenerator(std::shared_ptr<MessageBus<OrderData>> signalBus, std::shared_ptr<DataStore> dataStore): signalBus {signalBus}, dataStore{dataStore} {}; 
     virtual ~SignalGenerator() = default;
     virtual void onNewData(const TickerData& ticker) = 0;
 };
