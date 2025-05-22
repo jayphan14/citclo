@@ -25,7 +25,7 @@ std::vector<double>  DataStore::getRecentPrice(int numTicker)
 
     for (int i = 1; i <= numTicker; i++)
     {
-        if (data.size() - i < 0) break;
+        if (data.size() < i) break;
         prices.push_back(data[data.size() - i].price);
     }
 

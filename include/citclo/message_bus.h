@@ -2,6 +2,7 @@
 
 #pragma once
 #include <vector>
+#include "citclo/order_data.h"
 
 template <typename T>
 class MessageBus
@@ -22,3 +23,13 @@ public:
         }
     };
 };
+
+template<>
+inline void MessageBus<OrderData>::publish(OrderData message)
+{
+    for (auto& sub : subscribers)
+    {
+        sub(message);
+    }
+    std::cout << "QUEUEING ORDER" << message << '\n';
+}

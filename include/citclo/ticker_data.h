@@ -12,7 +12,6 @@ struct TickerData {
     double size;
 };
 
-// Inline definition of operator<< to allow header-only usage
 inline std::ostream& operator<<(std::ostream& os, const TickerData& td) {
     std::time_t time = std::chrono::system_clock::to_time_t(td.timestamp);
     os << std::put_time(std::localtime(&time), "%Y-%m-%d %H:%M:%S")

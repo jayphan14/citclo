@@ -3,6 +3,9 @@
 #include "citclo/message_bus.h"
 #include "citclo/signal_generator.h"
 #include "citclo/data_store.h"
+#include "citclo/ticker_data.h"
+#include "citclo/order_data.h"
+#include "citclo/linear_regression_strategy.h"
 
 #include "memory"
 #include <iostream>
@@ -25,16 +28,18 @@ int main()
 
     DataSource dataSource{std::move(file), inGatewayCallback};
 
-    SignalGenerator signalGenerator;
-    DataStore dataStore(10000);
+    auto orderBus = std::make_shared<MessageBus<OrderData>>();
 
-    auto signalGeneratorCallback =  [&signalGenerator](TickerData& data) {signalGenerator.onNewData(data); }; 
-    auto dataStoreCallback =  [&dataStore](TickerData& data) {dataStore.onNewData(data); };
 
-    dataBus->subscribe(signalGeneratorCallback);
+    auto dataStore = std::make_shared<DataStore>(10000);
+
+    LinearRegressionStrategy linRegStrat(orderBus, dataStore);
+
+    auto linRegStratCallback =  [&linRegStrat](TickerData& data) {linRegStrat.onNewData(data); }; 
+    auto dataStoreCallback =  [&dataStore](TickerData& data) {dataStore->onNewData(data); };
+
+    dataBus->subscribe(linRegStratCallback);
     dataBus->subscribe(dataStoreCallback);
-
-
 
     while(true)
     {

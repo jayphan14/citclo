@@ -26,3 +26,6 @@
 
 # Data file is lowkey too big 
 /data/*
+
+# External lib
+/external/

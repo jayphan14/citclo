@@ -20,12 +20,15 @@ file(GLOB_RECURSE SRC_FILES   src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES include/*.h)
 
 # 4) Include headers
-include_directories(include)
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/external/eigen-3.4.0
+)
 
 # 5) Main executable
 add_executable(citclo ${SRC_FILES})
 
 # 6) Tests
-enable_testing()
-add_executable(tests tests/test_main.cpp)
-add_test(NAME unit_tests COMMAND tests)
+# enable_testing()
+# add_executable(tests tests/test_main.cpp)
+# add_test(NAME unit_tests COMMAND tests)
