@@ -6,6 +6,8 @@
 #include "citclo/ticker_data.h"
 #include "citclo/order_data.h"
 #include "citclo/linear_regression_strategy.h"
+#include "citclo/order_management_system.h"
+#include "citclo/out_gateway.h"
 
 #include "memory"
 #include <iostream>
@@ -40,6 +42,21 @@ int main()
 
     dataBus->subscribe(linRegStratCallback);
     dataBus->subscribe(dataStoreCallback);
+
+    auto orderBus = std::make_shared<MessageBus<OrderData>>();
+    auto oms = OMS(orderBus);
+    
+    auto omsCallback = [&oms](OrderData& order) {oms.onNewSignal(order); }; 
+    
+    signalBus->subscribe(omsCallback);
+
+    auto ackBus = std::make_shared<MessageBus<OrderData>>();
+
+    auto NYSEgw = NYSEOutGateway(ackBus);
+
+    auto NYSEgwCallback = [&NYSEgw](OrderData& order) {NYSEgw.onNewOrderRequest(order); }; 
+    
+    orderBus->subscribe(NYSEgwCallback);
 
     while(true)
     {

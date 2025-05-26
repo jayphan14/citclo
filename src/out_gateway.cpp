@@ -54,7 +54,7 @@ void NYSEOutGateway::onNewAck(std::string ack)
     }
 }
 
-void submitOrder(OrderData order)
+void NYSEOutGateway::submitOrder(OrderData order)
 {
     std::ostringstream fix;
 
@@ -68,4 +68,9 @@ void submitOrder(OrderData order)
             << "40=2|";                    // OrdType = limit
 
     std::cout << "Submitting FIX Order: " << fix.str() << std::endl;
+}
+
+void NYSEOutGateway::onNewOrderRequest(OrderData& orderReq)
+{
+    submitOrder(orderReq);
 }

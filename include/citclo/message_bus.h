@@ -24,12 +24,3 @@ public:
     };
 };
 
-template<>
-inline void MessageBus<OrderData>::publish(OrderData message)
-{
-    for (auto& sub : subscribers)
-    {
-        sub(message);
-    }
-    std::cout << "QUEUEING ORDER" << message << '\n';
-}

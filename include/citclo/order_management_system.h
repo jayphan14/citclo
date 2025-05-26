@@ -13,10 +13,9 @@ private:
     std::shared_ptr<MessageBus<OrderData>> orderBus;
     std::deque<OrderData> sentOrders {};
     std::deque<OrderData> filledOrders {};
-    std::vector<OrderData> currentPositions;
+    std::vector<OrderData> currentPositions{};
 public:
-    OMS(std::shared_ptr<MessageBus<OrderData>> orderBus) : orderBus{orderBus} {};
-    void onNewSignal(OrderData order);
-    // void onNewAck(Ack ) 
+    OMS(std::shared_ptr<MessageBus<OrderData>> orderBus);
+    void onNewSignal(OrderData& order);
     std::vector<OrderData> getCurrentPositions();
 };

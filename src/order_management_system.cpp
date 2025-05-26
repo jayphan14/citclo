@@ -1,7 +1,7 @@
 #include "citclo/order_management_system.h"
 #include <numeric>
 
-void OMS::onNewSignal(OrderData order)
+void OMS::onNewSignal(OrderData& order)
 {
     double totalVolume = std::accumulate(
         sentOrders.begin(), sentOrders.end(), 0.0,
@@ -22,3 +22,5 @@ std::vector<OrderData> OMS::getCurrentPositions()
 {
     return currentPositions;
 }
+
+OMS::OMS(std::shared_ptr<MessageBus<OrderData>> orderBus) : orderBus{orderBus} {};

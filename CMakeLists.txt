@@ -22,6 +22,7 @@ file(GLOB_RECURSE HEADER_FILES include/*.h)
 # 4) Include headers
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/include/citclo
     ${CMAKE_SOURCE_DIR}/external/eigen-3.4.0
 )
 
