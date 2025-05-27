@@ -1,6 +1,6 @@
 #include "citclo/data_store.h"
 
-void DataStore::onNewData(TickerData& ticker)
+void CitClo::DataStore::onNewData(TickerData& ticker)
 {
     if (data.size() > 0 && data.back().price == ticker.price)
     {
@@ -19,7 +19,7 @@ void DataStore::onNewData(TickerData& ticker)
 };
 
 
-std::vector<double>  DataStore::getRecentPrice(int numTicker)
+std::vector<double> CitClo::DataStore::getRecentPrice(int numTicker)
 {
     std::vector<double> prices{};
 

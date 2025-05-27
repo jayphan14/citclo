@@ -8,6 +8,8 @@
 #include "citclo/data_store.h"
 #include "citclo/message_bus.h"
 
+namespace CitClo {
+
 class SignalGenerator
 {
 protected:
@@ -18,3 +20,5 @@ public:
     virtual ~SignalGenerator() = default;
     virtual void onNewData(const TickerData& ticker) = 0;
 };
+
+} // namespace CitClo

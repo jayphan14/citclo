@@ -22,39 +22,39 @@ int main()
         return 1;
     }
 
-    auto dataBus = std::make_shared<MessageBus<TickerData>>();
+    auto dataBus = std::make_shared<CitClo::MessageBus<CitClo::TickerData>>();
 
-    InGateway inGateway(dataBus);
+    CitClo::InGateway inGateway(dataBus);
     
     auto inGatewayCallback =  [&inGateway](std::string data) {inGateway.onNewData(data); }; 
 
-    DataSource dataSource{std::move(file), inGatewayCallback};
+    CitClo::DataSource dataSource{std::move(file), inGatewayCallback};
 
-    auto signalBus = std::make_shared<MessageBus<OrderData>>();
+    auto signalBus = std::make_shared<CitClo::MessageBus<CitClo::OrderData>>();
 
 
-    auto dataStore = std::make_shared<DataStore>(10000);
+    auto dataStore = std::make_shared<CitClo::DataStore>(10000);
 
-    LinearRegressionStrategy linRegStrat(signalBus, dataStore);
+    CitClo::LinearRegressionStrategy linRegStrat(signalBus, dataStore);
 
-    auto linRegStratCallback =  [&linRegStrat](TickerData& data) {linRegStrat.onNewData(data); }; 
-    auto dataStoreCallback =  [&dataStore](TickerData& data) {dataStore->onNewData(data); };
+    auto linRegStratCallback =  [&linRegStrat](CitClo::TickerData& data) {linRegStrat.onNewData(data); }; 
+    auto dataStoreCallback =  [&dataStore](CitClo::TickerData& data) {dataStore->onNewData(data); };
 
     dataBus->subscribe(linRegStratCallback);
     dataBus->subscribe(dataStoreCallback);
 
-    auto orderBus = std::make_shared<MessageBus<OrderData>>();
-    auto oms = OMS(orderBus);
+    auto orderBus = std::make_shared<CitClo::MessageBus<CitClo::OrderData>>();
+    auto oms = CitClo::OMS(orderBus);
     
-    auto omsCallback = [&oms](OrderData& order) {oms.onNewSignal(order); }; 
+    auto omsCallback = [&oms](CitClo::OrderData& order) {oms.onNewSignal(order); }; 
     
     signalBus->subscribe(omsCallback);
 
-    auto ackBus = std::make_shared<MessageBus<OrderData>>();
+    auto ackBus = std::make_shared<CitClo::MessageBus<CitClo::OrderData>>();
 
-    auto NYSEgw = NYSEOutGateway(ackBus);
+    auto NYSEgw = CitClo::NYSEOutGateway(ackBus);
 
-    auto NYSEgwCallback = [&NYSEgw](OrderData& order) {NYSEgw.onNewOrderRequest(order); }; 
+    auto NYSEgwCallback = [&NYSEgw](CitClo::OrderData& order) {NYSEgw.onNewOrderRequest(order); }; 
     
     orderBus->subscribe(NYSEgwCallback);
 

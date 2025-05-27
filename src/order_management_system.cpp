@@ -1,11 +1,11 @@
 #include "citclo/order_management_system.h"
 #include <numeric>
 
-void OMS::onNewSignal(OrderData& order)
+void CitClo::OMS::onNewSignal(CitClo::OrderData& order)
 {
     double totalVolume = std::accumulate(
         sentOrders.begin(), sentOrders.end(), 0.0,
-        [](double sum, const OrderData& o) {
+        [](double sum, const CitClo::OrderData& o) {
             return sum + o.volume;
         }
     );
@@ -18,9 +18,9 @@ void OMS::onNewSignal(OrderData& order)
     }
 };
 
-std::vector<OrderData> OMS::getCurrentPositions()
+std::vector<CitClo::OrderData> CitClo::OMS::getCurrentPositions()
 {
     return currentPositions;
 }
 
-OMS::OMS(std::shared_ptr<MessageBus<OrderData>> orderBus) : orderBus{orderBus} {};
+CitClo::OMS::OMS(std::shared_ptr<CitClo::MessageBus<CitClo::OrderData>> orderBus) : orderBus{orderBus} {};

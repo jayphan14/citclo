@@ -1,7 +1,7 @@
 #include <Eigen/Dense>
 #include "citclo/linear_regression_strategy.h"
 
-void LinearRegressionStrategy::onNewData(const TickerData& ticker)
+void CitClo::LinearRegressionStrategy::onNewData(const CitClo::TickerData& ticker)
 {
     auto priceHistory = dataStore->getRecentPrice(1000);
     if (priceHistory.size() < 500) return;
@@ -25,7 +25,7 @@ void LinearRegressionStrategy::onNewData(const TickerData& ticker)
     
     if (ticker.price <= 0.98 * predictedPrice)
     {
-        OrderData order {ticker.price, ticker.size};
+        CitClo::OrderData order {ticker.price, ticker.size};
         signalBus->publish(order);
     }
 }

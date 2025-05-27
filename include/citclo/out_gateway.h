@@ -3,6 +3,8 @@
 #include <string>
 #include <memory>
 
+namespace CitClo {
+
 class IOutGateway
 {
 private:
@@ -25,3 +27,5 @@ public:
     void onNewOrderRequest(OrderData& orderReq) override;
     void submitOrder(OrderData order) override;
 };
+
+} // namespace CitClo

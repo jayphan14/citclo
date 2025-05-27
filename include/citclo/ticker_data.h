@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <iostream>
 
+namespace CitClo {
+
 struct TickerData {
     std::chrono::system_clock::time_point timestamp;
     double price;
@@ -21,3 +23,5 @@ inline std::ostream& operator<<(std::ostream& os, const TickerData& td) {
        << " Size: " << td.size;
     return os;
 }
+
+} // namespace CitClo

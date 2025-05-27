@@ -23,7 +23,7 @@
 #include "citclo/out_gateway.h"
 #include <sstream>
 
-std::unordered_map<int, std::string> IOutGateway::parseFIX(const std::string& fixMessage) {
+std::unordered_map<int, std::string> CitClo::IOutGateway::parseFIX(const std::string& fixMessage) {
     std::unordered_map<int, std::string> fields;
     std::stringstream ss(fixMessage);
     std::string token;
@@ -41,7 +41,7 @@ std::unordered_map<int, std::string> IOutGateway::parseFIX(const std::string& fi
     return fields;
 }
 
-void NYSEOutGateway::onNewAck(std::string ack)
+void CitClo::NYSEOutGateway::onNewAck(std::string ack)
 {
     auto parsed = parseFIX(ack);
 
@@ -50,11 +50,11 @@ void NYSEOutGateway::onNewAck(std::string ack)
         std::string symbol =  parsed[55];
         double price = std::stod(parsed[31]);
         double volume = std::stod(parsed[32]);
-        ackBus->publish(OrderData{price, volume});
+        ackBus->publish(CitClo::OrderData{price, volume});
     }
 }
 
-void NYSEOutGateway::submitOrder(OrderData order)
+void CitClo::NYSEOutGateway::submitOrder(CitClo::OrderData order)
 {
     std::ostringstream fix;
 
@@ -70,7 +70,7 @@ void NYSEOutGateway::submitOrder(OrderData order)
     std::cout << "Submitting FIX Order: " << fix.str() << std::endl;
 }
 
-void NYSEOutGateway::onNewOrderRequest(OrderData& orderReq)
+void CitClo::NYSEOutGateway::onNewOrderRequest(CitClo::OrderData& orderReq)
 {
     submitOrder(orderReq);
 }

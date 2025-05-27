@@ -7,6 +7,8 @@
 #include <vector>
 #include <memory>
 
+namespace CitClo {
+
 class OMS
 {
 private:
@@ -19,3 +21,5 @@ public:
     void onNewSignal(OrderData& order);
     std::vector<OrderData> getCurrentPositions();
 };
+
+} // namespace CitClo

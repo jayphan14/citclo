@@ -6,6 +6,8 @@
 #include "citclo/ticker_data.h"
 #include "citclo/message_bus.h"
 
+namespace CitClo {
+
 class InGateway
 {
 private:
@@ -15,3 +17,5 @@ public:
     InGateway(std::shared_ptr<MessageBus<TickerData>>);
     void onNewData(std::string data);
 };
+
+} // namespace CitClo

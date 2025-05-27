@@ -1,6 +1,6 @@
 #include "citclo/data_source.h"
 
-void DataSource::source()
+void CitClo::DataSource::source()
 {
     if (!dataStream.is_open()) {
         throw std::runtime_error("File is not opened");

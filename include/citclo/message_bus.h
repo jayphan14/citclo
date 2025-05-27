@@ -4,6 +4,8 @@
 #include <vector>
 #include "citclo/order_data.h"
 
+namespace CitClo {
+
 template <typename T>
 class MessageBus
 {
@@ -23,4 +25,6 @@ public:
         }
     };
 };
+
+} // namespace CitClo
 

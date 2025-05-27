@@ -5,6 +5,8 @@
 #include <sstream>
 #include <functional>
 
+namespace CitClo {
+
 struct DataSource
 {
     std::ifstream dataStream;
@@ -12,3 +14,5 @@ struct DataSource
 
     void source(); // source takes in a call back functions
 };
+
+} // namespace CitClo

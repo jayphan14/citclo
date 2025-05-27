@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+namespace CitClo {
+
 struct OrderData
 {
     double price = 0;
@@ -14,3 +16,5 @@ inline std::ostream& operator<<(std::ostream& os, const OrderData& od) {
        << " Size: " << od.volume;
     return os;
 }
+
+} // namespace CitClo

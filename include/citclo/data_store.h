@@ -5,6 +5,8 @@
 
 #include "citclo/ticker_data.h"
 
+namespace CitClo {
+
 class DataStore
 {
 private:
@@ -15,3 +17,5 @@ public:
     void onNewData(TickerData& ticker);
     std::vector<double> getRecentPrice(int numTicker);
 };
+
+} // namespace CitClo

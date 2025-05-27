@@ -5,11 +5,9 @@
 #include <sstream>
 #include <iomanip>
 
-
-
-TickerData InGateway::parseData(std::string& data)
+CitClo::TickerData CitClo::InGateway::parseData(std::string& data)
 {
-    TickerData ticker;
+    CitClo::TickerData ticker;
     std::stringstream ss(data);
     std::string date;
     std::string time;
@@ -44,10 +42,10 @@ TickerData InGateway::parseData(std::string& data)
     return ticker;
 };
 
-void InGateway::onNewData(std::string data)
+void CitClo::InGateway::onNewData(std::string data)
 {
-    TickerData td = parseData(data);
+    CitClo::TickerData td = parseData(data);
     dataBus->publish(td);
 };
 
-InGateway::InGateway(std::shared_ptr<MessageBus<TickerData>> bus): dataBus{bus} {}; 
+CitClo::InGateway::InGateway(std::shared_ptr<CitClo::MessageBus<CitClo::TickerData>> bus): dataBus{bus} {}; 
