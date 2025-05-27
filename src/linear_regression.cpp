@@ -3,6 +3,7 @@
 
 void CitClo::LinearRegressionStrategy::onNewData(const CitClo::TickerData& ticker)
 {
+    // BUY MORE
     auto priceHistory = dataStore->getRecentPrice(1000);
     if (priceHistory.size() < 500) return;
     
@@ -27,5 +28,17 @@ void CitClo::LinearRegressionStrategy::onNewData(const CitClo::TickerData& ticke
     {
         CitClo::OrderData order {ticker.price, ticker.size};
         signalBus->publish(order);
+    }
+    
+    // SELL:
+    if (this->oms->getCurrentPositions().size() > 0)
+    {
+        auto posToSell = this->oms->getCheapestPosition();
+        posToSell.volume *= -1;
+
+        if (posToSell.price < ticker.price * 1.02)
+        {
+            signalBus->publish(posToSell); 
+        }
     }
 }

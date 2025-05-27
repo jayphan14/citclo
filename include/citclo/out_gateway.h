@@ -1,5 +1,6 @@
 #include "citclo/order_data.h"
 #include "citclo/message_bus.h"
+#include "citclo/ack.h"
 #include <string>
 #include <memory>
 
@@ -24,8 +25,12 @@ class NYSEOutGateway: public IOutGateway
 public:
     NYSEOutGateway(std::shared_ptr<MessageBus<OrderData>> ackBus): IOutGateway{ackBus} {}; 
     void onNewAck(std::string ack) override;
+
     void onNewOrderRequest(OrderData& orderReq) override;
     void submitOrder(OrderData order) override;
+
+    // Mock function to mimic response from exchange
+    void getResponse(OrderData order);
 };
 
 } // namespace CitClo

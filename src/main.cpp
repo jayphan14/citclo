@@ -35,30 +35,36 @@ int main()
 
     auto dataStore = std::make_shared<CitClo::DataStore>(10000);
 
-    CitClo::LinearRegressionStrategy linRegStrat(signalBus, dataStore);
+
+
+    auto orderBus = std::make_shared<CitClo::MessageBus<CitClo::OrderData>>();
+    auto oms = std::make_shared<CitClo::OMS>(orderBus);
+
+    CitClo::LinearRegressionStrategy linRegStrat(signalBus, dataStore, oms);
 
     auto linRegStratCallback =  [&linRegStrat](CitClo::TickerData& data) {linRegStrat.onNewData(data); }; 
     auto dataStoreCallback =  [&dataStore](CitClo::TickerData& data) {dataStore->onNewData(data); };
-
     dataBus->subscribe(linRegStratCallback);
     dataBus->subscribe(dataStoreCallback);
 
-    auto orderBus = std::make_shared<CitClo::MessageBus<CitClo::OrderData>>();
-    auto oms = CitClo::OMS(orderBus);
+
     
-    auto omsCallback = [&oms](CitClo::OrderData& order) {oms.onNewSignal(order); }; 
+    auto omsCallback = [&oms](CitClo::OrderData& order) {oms->onNewSignal(order); }; 
+    auto omsNewOrderFilledCallback = [&oms](CitClo::OrderData& order) {oms->onNewOrderFilled(order); }; 
     
     signalBus->subscribe(omsCallback);
 
     auto ackBus = std::make_shared<CitClo::MessageBus<CitClo::OrderData>>();
+    ackBus->subscribe(omsNewOrderFilledCallback);
 
     auto NYSEgw = CitClo::NYSEOutGateway(ackBus);
-
     auto NYSEgwCallback = [&NYSEgw](CitClo::OrderData& order) {NYSEgw.onNewOrderRequest(order); }; 
     
     orderBus->subscribe(NYSEgwCallback);
 
-    while(true)
+    constexpr int NUM_DATAPOINTS = 10000;
+    
+    for (int i = 0; i < NUM_DATAPOINTS; ++i)
     {
         try
         {
